@@ -1,27 +1,25 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { User } from './types';
 
-// API key por defecto (esto sería seguro en un backend real)
 const DEFAULT_API_KEY = "tu_clave_api_por_defecto";
 
-type AuthContextType = {
+export type AuthContextType = {
   user: User | null;
   isLoading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, name: string) => Promise<void>;
+  signIn: (email: string) => Promise<void>;
+  signUp: (email: string, name: string) => Promise<void>;
   signOut: () => void;
   updateApiKey: (apiKey: string) => void;
   getApiKey: () => string;
 };
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Cargar usuario desde localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -29,11 +27,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(false);
   }, []);
 
-  const signIn = async (email: string, password: string) => {
-    // Simulación de autenticación
+  const signIn = async (email: string) => {
     setIsLoading(true);
     try {
-      // En una app real, esto sería una llamada a API
       const mockUser: User = {
         id: `user_${Math.random().toString(36).substring(2, 9)}`,
         email,
@@ -41,7 +37,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         plan: 'free',
         createdAt: new Date(),
       };
-      
+
       setUser(mockUser);
       localStorage.setItem('user', JSON.stringify(mockUser));
     } catch (error) {
@@ -52,10 +48,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signUp = async (email: string, password: string, name: string) => {
+  const signUp = async (email: string, name: string) => {
     setIsLoading(true);
     try {
-      // Simulación de registro
       const mockUser: User = {
         id: `user_${Math.random().toString(36).substring(2, 9)}`,
         email,
@@ -63,7 +58,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         plan: 'free',
         createdAt: new Date(),
       };
-      
+
       setUser(mockUser);
       localStorage.setItem('user', JSON.stringify(mockUser));
     } catch (error) {
@@ -96,12 +91,4 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth debe ser usado dentro de un AuthProvider');
-  }
-  return context;
 };

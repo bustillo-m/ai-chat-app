@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/lib/auth-context';
+import { useAuth } from '@/lib/use-auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
-import MainLayout from '@/components/layout/main-layout';
+import MainLayout from '@/components/layout/MainLayout';
 
 export default function SettingsPage() {
   const { user, updateApiKey, getApiKey, signOut } = useAuth();
@@ -70,7 +70,7 @@ export default function SettingsPage() {
             <TabsTrigger value="api">API</TabsTrigger>
             <TabsTrigger value="account">Cuenta</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="general">
             <Card>
               <CardHeader>
@@ -104,13 +104,13 @@ export default function SettingsPage() {
               </CardContent>
             </Card>
           </TabsContent>
-          
+
           <TabsContent value="api">
             <Card>
               <CardHeader>
                 <CardTitle>Configuración de API</CardTitle>
                 <CardDescription>
-                  Gestiona tu clave API de OpenAI. Esta aplicación ya incluye una clave API por defecto, 
+                  Gestiona tu clave API de OpenAI. Esta aplicación ya incluye una clave API por defecto,
                   pero puedes usar la tuya propia para mayor personalización.
                 </CardDescription>
               </CardHeader>
@@ -134,7 +134,7 @@ export default function SettingsPage() {
               </CardContent>
             </Card>
           </TabsContent>
-          
+
           <TabsContent value="account">
             <Card>
               <CardHeader>
@@ -155,9 +155,9 @@ export default function SettingsPage() {
                     </Button>
                   </div>
                 </div>
-                
+
                 <Separator />
-                
+
                 <div>
                   <h3 className="font-medium text-lg text-destructive">Zona de peligro</h3>
                   <p className="text-muted-foreground mb-2">
