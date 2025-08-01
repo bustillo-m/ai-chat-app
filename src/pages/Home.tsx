@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import MainLayout from '@/components/layout/main-layout';
+import MainLayout from '@/components/layout/MainLayout';
 import { MessageSquare, Zap, ShieldCheck, Users } from 'lucide-react';
 
 export default function HomePage() {
@@ -48,10 +48,10 @@ export default function HomePage() {
               Ver planes
             </Button>
           </div>
-          
+
           <div className="mt-16 relative">
             <div className="rounded-lg overflow-hidden border shadow-lg">
-              <img 
+              <img
                 src="https://placehold.co/1200x700/e6e7ff/6366f1?text=Vista+previa+del+chat&font=roboto"
                 alt="Vista previa de la aplicación"
                 className="w-full"
@@ -93,8 +93,8 @@ export default function HomePage() {
           <p className="text-lg mb-8 max-w-2xl mx-auto">
             Únete a miles de usuarios que ya están experimentando el futuro de las conversaciones inteligentes.
           </p>
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             variant="secondary"
             onClick={() => navigate('/register')}
             className="bg-white text-primary-600 hover:bg-gray-100"

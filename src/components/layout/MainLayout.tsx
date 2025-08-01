@@ -1,17 +1,17 @@
 import { ReactNode } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/lib/auth-context';
+import { useAuth } from '@/lib/use-auth';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuLabel, 
-  DropdownMenuSeparator, 
-  DropdownMenuTrigger 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { MessageSquare, Settings, LogOut, CreditCard, Home, User } from 'lucide-react';
+import { MessageSquare, Settings, LogOut, CreditCard } from 'lucide-react';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -55,17 +55,17 @@ export default function MainLayout({ children }: MainLayoutProps) {
               <MessageSquare className="h-6 w-6 text-primary" />
               <span className="font-bold text-lg">AI Chat</span>
             </Link>
-            
+
             <nav className="hidden md:flex items-center gap-4">
               {navLinks.map((link) => {
                 const Icon = link.icon;
                 return (
-                  <Link 
-                    key={link.path} 
+                  <Link
+                    key={link.path}
                     to={link.path}
                     className={`flex items-center gap-1 px-3 py-2 rounded-md text-sm font-medium ${
-                      isActive(link.path) 
-                        ? 'bg-primary-50 text-primary-700' 
+                      isActive(link.path)
+                        ? 'bg-primary-50 text-primary-700'
                         : 'text-gray-700 hover:bg-gray-100'
                     }`}
                   >

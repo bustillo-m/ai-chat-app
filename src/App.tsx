@@ -1,10 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
 import { AuthProvider } from '@/lib/auth-context';
 import { ChatProvider } from '@/lib/chat-context';
 
 import HomePage from '@/pages/Home';
-import LoginPage from '@/pages/Login';
+import LoginPage from '@/pages/login';
 import RegisterPage from '@/pages/Register';
 import ChatPage from '@/pages/Chat';
 import PricingPage from '@/pages/Pricing';

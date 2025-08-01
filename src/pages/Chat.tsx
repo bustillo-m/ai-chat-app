@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/lib/auth-context';
-import { useChat } from '@/lib/chat-context';
+import { useAuth } from '@/lib/use-auth';
+import { useChat } from '@/lib/use-chat';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -10,14 +10,14 @@ import { Plus, Send, Trash } from 'lucide-react';
 
 export default function ChatPage() {
   const { user } = useAuth();
-  const { 
-    sessions, 
-    currentSession, 
-    createSession, 
-    selectSession, 
-    deleteSession, 
-    sendMessage, 
-    isLoading 
+  const {
+    sessions,
+    currentSession,
+    createSession,
+    selectSession,
+    deleteSession,
+    sendMessage,
+    isLoading
   } = useChat();
   const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ export default function ChatPage() {
     const form = e.target as HTMLFormElement;
     const input = form.elements.namedItem('message') as HTMLInputElement;
     const message = input.value.trim();
-    
+
     if (message) {
       sendMessage(message);
       input.value = '';
@@ -48,8 +48,8 @@ export default function ChatPage() {
       {/* Sidebar */}
       <div className="w-64 bg-gray-50 border-r border-gray-200 flex flex-col">
         <div className="p-4">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="w-full justify-start"
             onClick={createSession}
           >
@@ -59,16 +59,16 @@ export default function ChatPage() {
         </div>
         <ScrollArea className="flex-1">
           {sessions.map(session => (
-            <div 
-              key={session.id} 
+            <div
+              key={session.id}
               className={`p-2 m-2 rounded cursor-pointer flex justify-between items-center ${
                 currentSession?.id === session.id ? 'bg-primary-100' : 'hover:bg-gray-100'
               }`}
               onClick={() => selectSession(session.id)}
             >
               <span className="truncate">{session.title}</span>
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 size="sm"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -99,11 +99,11 @@ export default function ChatPage() {
               ) : (
                 <div className="space-y-4">
                   {currentSession.messages.map(message => (
-                    <div 
+                    <div
                       key={message.id}
                       className={`p-4 rounded-lg ${
-                        message.role === 'user' 
-                          ? 'bg-primary-100 ml-12' 
+                        message.role === 'user'
+                          ? 'bg-primary-100 ml-12'
                           : 'bg-gray-100 mr-12'
                       }`}
                     >
@@ -124,7 +124,7 @@ export default function ChatPage() {
             </ScrollArea>
             <Separator />
             <form onSubmit={handleSendMessage} className="p-4 flex gap-2">
-              <Input 
+              <Input
                 name="message"
                 placeholder="Escribe un mensaje..."
                 disabled={isLoading}

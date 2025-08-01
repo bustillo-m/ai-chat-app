@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '@/lib/auth-context';
+import { useAuth } from '@/lib/use-auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,8 +11,6 @@ import { AlertCircle } from 'lucide-react';
 export default function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { signUp } = useAuth();
@@ -30,17 +28,8 @@ export default function RegisterPage() {
       if (!email.trim()) {
         throw new Error('El correo electrónico es obligatorio');
       }
-      if (!password.trim()) {
-        throw new Error('La contraseña es obligatoria');
-      }
-      if (password !== confirmPassword) {
-        throw new Error('Las contraseñas no coinciden');
-      }
-      if (password.length < 6) {
-        throw new Error('La contraseña debe tener al menos 6 caracteres');
-      }
 
-      await signUp(email, password, name);
+      await signUp(email, name);
       navigate('/chat');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al registrarse');
@@ -96,22 +85,9 @@ export default function RegisterPage() {
                     id="password"
                     placeholder="••••••••"
                     type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
                     autoComplete="new-password"
-                    disabled={isSubmitting}
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="confirm-password">Confirmar contraseña</Label>
-                  <Input
-                    id="confirm-password"
-                    placeholder="••••••••"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    autoComplete="new-password"
-                    disabled={isSubmitting}
+                    disabled={true}
+                    value="No es necesaria para esta demo"
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={isSubmitting}>
@@ -123,8 +99,8 @@ export default function RegisterPage() {
           <CardFooter>
             <div className="text-sm text-center w-full">
               ¿Ya tienes una cuenta?{' '}
-              <Link 
-                to="/login" 
+              <Link
+                to="/login"
                 className="text-primary-600 hover:text-primary-700 font-medium"
               >
                 Iniciar sesión

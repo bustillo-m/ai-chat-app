@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { useAuth } from '@/lib/auth-context';
+import { useAuth } from '@/lib/use-auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,14 +10,12 @@ import { AlertCircle } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { signIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Si venimos de la página de precios, obtenemos el plan al que quiere suscribirse
   const { redirect = '/chat', plan = null } = location.state || {};
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -29,13 +27,9 @@ export default function LoginPage() {
       if (!email.trim()) {
         throw new Error('El correo electrónico es obligatorio');
       }
-      if (!password.trim()) {
-        throw new Error('La contraseña es obligatoria');
-      }
 
-      await signIn(email, password);
+      await signIn(email);
       
-      // Redirigir a la página adecuada
       if (plan) {
         navigate('/pricing', { state: { selectedPlan: plan } });
       } else {
@@ -93,8 +87,6 @@ export default function LoginPage() {
                     id="password"
                     placeholder="••••••••"
                     type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
                     disabled={isSubmitting}
                   />

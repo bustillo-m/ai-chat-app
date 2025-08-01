@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check } from 'lucide-react';
-import { useAuth } from '@/lib/auth-context';
+import { useAuth } from '@/lib/use-auth';
 import { useNavigate } from 'react-router-dom';
 
 const pricingPlans = [
@@ -71,7 +71,7 @@ export default function PricingPage() {
       navigate('/login', { state: { redirect: '/pricing', plan: planId } });
       return;
     }
-    
+
     // Aquí implementarías la lógica de suscripción
     console.log(`Suscripción al plan: ${planId}`);
   };
@@ -87,8 +87,8 @@ export default function PricingPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {pricingPlans.map(plan => (
-          <Card 
-            key={plan.id} 
+          <Card
+            key={plan.id}
             className={`flex flex-col ${
               plan.recommended ? 'border-primary-500 border-2' : ''
             }`}
@@ -117,7 +117,7 @@ export default function PricingPage() {
               </ul>
             </CardContent>
             <CardFooter>
-              <Button 
+              <Button
                 className={`w-full ${
                   plan.recommended ? 'bg-primary-500 hover:bg-primary-600' : ''
                 }`}
